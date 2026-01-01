@@ -13,6 +13,7 @@ fun Application.module() {
     routing {
         //health check API
         get("/health") {
+            application.log.debug("Triggered health check")
             call.respondText("Ktor is healthy.")
         }
 

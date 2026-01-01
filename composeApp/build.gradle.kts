@@ -1,5 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import java.util.Properties
+import java.util.*
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -86,6 +86,7 @@ dependencies {
 
 private object KeyStoreValues {
     const val CLIENT_ID_GOOGLE_AUTH = "CLIENT_ID_GOOGLE_AUTH"
+    const val KTOR_ENTRY_URL = "KTOR_ENTRY_URL"
 }
 
 buildkonfig {
@@ -100,6 +101,11 @@ buildkonfig {
             com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
             KeyStoreValues.CLIENT_ID_GOOGLE_AUTH,
             secretProps.getProperty(KeyStoreValues.CLIENT_ID_GOOGLE_AUTH)
+        )
+        buildConfigField(
+            com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
+            KeyStoreValues.KTOR_ENTRY_URL,
+            secretProps.getProperty(KeyStoreValues.KTOR_ENTRY_URL)
         )
     }
 }
