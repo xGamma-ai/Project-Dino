@@ -8,5 +8,4 @@ target 'iosApp' do
 
   # Pods for iosApp
   pod 'shared', :path => '../shared'
-  pod 'GoogleSignIn'
 end
