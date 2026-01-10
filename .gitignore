@@ -24,3 +24,4 @@ iosApp/Pods
 xcuserdata/
 *.podspec
 iosApp/Configuration/Google.xcconfig
+/glide-logs

@@ -2,14 +2,25 @@ package com.alwinsden.dino
 
 import com.alwinsden.dino.googleAuthn.serverManager.nonceGenerator
 import com.alwinsden.dino.googleAuthn.serverManager.verifyGoogleToken
+import com.alwinsden.dino.valkeyManager.ValkeyManager
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import kotlinx.coroutines.launch
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 fun Application.module() {
+    launch {
+        try {
+            val applicationEnv: ApplicationEnvironment = environment
+            ValkeyManager.apply { initValkey(applicationEnv) }
+        } catch (e: Exception) {
+            log.error("Failed to initialize ValkeyManager")
+            e.printStackTrace()
+        }
+    }
     routing {
         //health check API
         get("/health") {

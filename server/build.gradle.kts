@@ -12,6 +12,7 @@ application {
     val isDevelopment: Boolean = project.ext.has("development")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
+val valkeyVersion = "1.0.0"
 
 dependencies {
     implementation(projects.shared)
@@ -20,5 +21,10 @@ dependencies {
     implementation(libs.ktor.serverNetty)
     testImplementation(libs.ktor.serverTestHost)
     testImplementation(libs.kotlin.testJunit)
-    implementation("com.google.api-client:google-api-client:1.32.1")
+    implementation(libs.google.api.client)
+    //this will only build on OSx. change for any other platform build.
+    implementation(variantOf(libs.valkey.glide) {
+        classifier("osx-aarch_64")
+    })
+    implementation(libs.netty.codec.protobuf)
 }

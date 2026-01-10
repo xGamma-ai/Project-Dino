@@ -9,14 +9,13 @@ import com.google.api.client.json.gson.GsonFactory
 import io.ktor.server.application.*
 
 fun ApplicationCall.verifyGoogleToken(mobileGoogleIdToken: String) {
-//    application.log.info(mobileGoogleIdToken)
     val transport: HttpTransport = GoogleNetHttpTransport.newTrustedTransport()
     val jsonFactory: JsonFactory = GsonFactory.getDefaultInstance()
     val verifier: GoogleIdTokenVerifier = GoogleIdTokenVerifier.Builder(
         transport, jsonFactory
     ).setAudience(
         listOf(
-            application.environment.config.propertyOrNull("dinoBackend.googleAuth.googleAudience")?.getString()
+            application.environment.config.propertyOrNull("dinoBackend.googleAuth.GOOGLE_AUDIENCE")?.getString()
         )
     ).build()
     val idToken: GoogleIdToken = verifier.verify(mobileGoogleIdToken)
