@@ -15,7 +15,7 @@ import org.jetbrains.compose.resources.Font
 /*
 * define data classes
 * */
-data class IncomingFontStylesDataClass(
+data class DefaultFontStylesDataClass(
     val fontSize: TextUnit? = null,
     val fontWeight: FontWeight? = null,
     val fontStyle: FontStyle? = null,
@@ -27,7 +27,7 @@ data class IncomingFontStylesDataClass(
 * */
 
 @Composable
-fun defaultFontStyle(incomingStyles: IncomingFontStylesDataClass): TextStyle {
+fun defaultFontStyle(incomingStyles: DefaultFontStylesDataClass): TextStyle {
     return TextStyle(
         fontFamily = FontLibrary.ebGaramond(),
         fontWeight = incomingStyles.fontWeight ?: FontWeight.Normal,

@@ -10,22 +10,23 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import com.alwinsden.dino.utilities.UI.FontLibrary
+import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
 import com.alwinsden.dino.utilities.UI.PageDefaults
+import com.alwinsden.dino.utilities.UI.defaultFontStyle
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Preview
 @Composable
 fun BotTextField(mode: String? = null) {
     val defaultFieldText = "Talk to Dino.....a great listener."
-    val defaultTextFieldValue = rememberTextFieldState(defaultFieldText)
+    val defaultTextFieldValue = rememberTextFieldState("")
     if ((mode === null || mode == PageDefaults.botTextDefault)) {
         Row(
             modifier = Modifier
@@ -39,11 +40,28 @@ fun BotTextField(mode: String? = null) {
         ) {
             Icon(imageVector = Icons.Default.Image, contentDescription = "Attach images", tint = Color(0xff828282))
             Spacer(modifier = Modifier.width(5.dp))
-            BasicTextField(
-                state = defaultTextFieldValue,
-                textStyle = TextStyle(color = Color(0xff958282), fontFamily = FontLibrary.ebGaramond()),
+            Box(
                 modifier = Modifier.weight(1f)
-            )
+            ) {
+                BasicTextField(
+                    state = defaultTextFieldValue,
+                    textStyle = defaultFontStyle(
+                        DefaultFontStylesDataClass(
+                            colorInt = 0xff000000,
+                        )
+                    ),
+                )
+                if (defaultTextFieldValue.text.toString().isEmpty()) {
+                    Text(
+                        text = defaultFieldText,
+                        style = defaultFontStyle(
+                            DefaultFontStylesDataClass(
+                                colorInt = 0xff958282,
+                            )
+                        )
+                    )
+                }
+            }
             Spacer(modifier = Modifier.width(5.dp))
             Icon(imageVector = Icons.Default.Send, contentDescription = "Send query", tint = Color(0xff888888))
         }

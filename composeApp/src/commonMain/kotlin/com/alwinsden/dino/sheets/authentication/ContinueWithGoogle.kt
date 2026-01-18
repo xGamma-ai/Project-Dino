@@ -15,8 +15,8 @@ import androidx.compose.ui.unit.sp
 import com.alwinsden.dino.requestManager.RequestManager
 import com.alwinsden.dino.requestManager.get.createNonce
 import com.alwinsden.dino.utilities.UI.ClientKtorConfiguration
+import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
 import com.alwinsden.dino.utilities.UI.Defaults
-import com.alwinsden.dino.utilities.UI.IncomingFontStylesDataClass
 import com.alwinsden.dino.utilities.UI.defaultFontStyle
 import dino.composeapp.generated.resources.Res
 import dino.composeapp.generated.resources.dino_corner
@@ -53,7 +53,7 @@ fun ContinueWithGoogle() {
                     "Project Dino*",
                     color = Color.White,
                     style = defaultFontStyle(
-                        incomingStyles = IncomingFontStylesDataClass(
+                        incomingStyles = DefaultFontStylesDataClass(
                             fontSize = 35.sp,
                             fontWeight = FontWeight.Normal,
                         )
@@ -65,7 +65,7 @@ fun ContinueWithGoogle() {
                         "continue with",
                         color = Color.White,
                         style = defaultFontStyle(
-                            IncomingFontStylesDataClass(
+                            DefaultFontStylesDataClass(
                                 fontSize = 18.sp
                             )
                         )

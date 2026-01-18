@@ -13,7 +13,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
 import com.alwinsden.dino.utilities.UI.FontLibrary
+import com.alwinsden.dino.utilities.UI.defaultFontStyle
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Preview
@@ -35,9 +37,12 @@ fun InitializedUiState() {
         Text(
             "A new day! How is your day going so far?",
             textAlign = TextAlign.Center,
-            fontFamily = FontLibrary.ebGaramond(),
             modifier = Modifier.width(220.dp),
-            fontSize = 16.sp,
+            style = defaultFontStyle(
+                DefaultFontStylesDataClass(
+                    fontSize = 18.sp
+                )
+            )
         )
     }
 }
