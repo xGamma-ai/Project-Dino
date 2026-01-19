@@ -3,13 +3,16 @@ package com.alwinsden.dino.botInterface.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.input.rememberTextFieldState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,23 +28,30 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Preview
 @Composable
 fun BotTextField(mode: String? = null) {
-    val defaultFieldText = "Talk to Dino.....a great listener."
+    val defaultFieldText = "ask Dino, anything ✨"
     val defaultTextFieldValue = rememberTextFieldState("")
+    val textFieldScrollState = rememberScrollState()
     if ((mode === null || mode == PageDefaults.botTextDefault)) {
         Row(
             modifier = Modifier
                 .fillMaxWidth(0.9f)
-                .clip(shape = RoundedCornerShape(100.dp))
-                .border(shape = RoundedCornerShape(100.dp), color = Color.Transparent, width = 1.dp)
-                .background(color = Color(0xffF2F2F2))
-                .padding(10.dp),
-            verticalAlignment = Alignment.CenterVertically,
+                .clip(shape = RoundedCornerShape(10.dp))
+                .border(shape = RoundedCornerShape(10.dp), color = Color.Transparent, width = 1.dp)
+                .background(color = Color(0xffF2F2F2)),
+            verticalAlignment = Alignment.Bottom,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Icon(imageVector = Icons.Default.Image, contentDescription = "Attach images", tint = Color(0xff828282))
+            IconButton(onClick = {}) {
+                Icon(
+                    imageVector = Icons.Default.Image,
+                    contentDescription = "Attach images",
+                    tint = Color(0xff828282)
+                )
+            }
             Spacer(modifier = Modifier.width(5.dp))
             Box(
                 modifier = Modifier.weight(1f)
+                    .align(Alignment.CenterVertically)
             ) {
                 BasicTextField(
                     state = defaultTextFieldValue,
@@ -50,6 +60,10 @@ fun BotTextField(mode: String? = null) {
                             colorInt = 0xff000000,
                         )
                     ),
+                    modifier = Modifier
+                        .heightIn(max = 200.dp)
+                        .verticalScroll(textFieldScrollState)
+                        .padding(vertical = 10.dp)
                 )
                 if (defaultTextFieldValue.text.toString().isEmpty()) {
                     Text(
@@ -58,12 +72,19 @@ fun BotTextField(mode: String? = null) {
                             DefaultFontStylesDataClass(
                                 colorInt = 0xff958282,
                             )
-                        )
+                        ),
+                        modifier = Modifier.padding(vertical = 10.dp),
                     )
                 }
             }
             Spacer(modifier = Modifier.width(5.dp))
-            Icon(imageVector = Icons.Default.Send, contentDescription = "Send query", tint = Color(0xff888888))
+            IconButton(onClick = {}) {
+                Icon(
+                    imageVector = Icons.Default.Send,
+                    contentDescription = "Send query",
+                    tint = Color(if (defaultTextFieldValue.text.isBlank()) 0xff888888 else 0xff23D76E)
+                )
+            }
         }
     }
 }

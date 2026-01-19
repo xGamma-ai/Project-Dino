@@ -7,3 +7,6 @@ object LoginWindow
 
 @Serializable
 object BotWindow
+
+@Serializable
+object BotChatWindow

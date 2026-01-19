@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.alwinsden.dino.botChatInterface.BotChatInterface
 import com.alwinsden.dino.botInterface.BotInterface
 import com.alwinsden.dino.sheets.authentication.ContinueWithGoogle
 
@@ -18,6 +19,9 @@ object NavigationController {
             }
             composable<BotWindow> {
                 BotInterface()
+            }
+            composable<BotChatWindow> {
+                BotChatInterface()
             }
         }
     }
