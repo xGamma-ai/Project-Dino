@@ -20,6 +20,7 @@ data class DefaultFontStylesDataClass(
     val fontWeight: FontWeight? = null,
     val fontStyle: FontStyle? = null,
     val colorInt: Long? = null,
+    val reduceFromDefault: Int? = null
 )
 
 /*
@@ -32,8 +33,8 @@ fun defaultFontStyle(incomingStyles: DefaultFontStylesDataClass): TextStyle {
         fontFamily = FontLibrary.ebGaramond(),
         fontWeight = incomingStyles.fontWeight ?: FontWeight.Normal,
         fontStyle = incomingStyles.fontStyle ?: FontStyle.Normal,
-        fontSize = incomingStyles.fontSize ?: 18.sp,
-        color = Color(incomingStyles.colorInt ?: 0xff000000)
+        fontSize = incomingStyles.fontSize ?: (18 - (incomingStyles.reduceFromDefault ?: 0)).sp,
+        color = Color(incomingStyles.colorInt ?: 0xff000000),
     )
 }
 

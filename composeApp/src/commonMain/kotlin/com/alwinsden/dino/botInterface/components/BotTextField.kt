@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.input.rememberTextFieldState
@@ -11,10 +12,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Send
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,14 +25,21 @@ import androidx.compose.ui.unit.dp
 import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
 import com.alwinsden.dino.utilities.UI.PageDefaults
 import com.alwinsden.dino.utilities.UI.defaultFontStyle
+import com.alwinsden.dino.utilities.UI.listModelDefinitions
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Preview
 @Composable
+@OptIn(ExperimentalMaterial3Api::class)
 fun BotTextField(mode: String? = null) {
     val defaultFieldText = "ask Dino, anything ✨"
     val defaultTextFieldValue = rememberTextFieldState("")
     val textFieldScrollState = rememberScrollState()
+    val sheetState = rememberModalBottomSheetState()
+    val routineScope = rememberCoroutineScope()
+    val controlBottomSheetStatus = remember { mutableStateOf<Boolean>(false) }
+    val defaultModelSelection = remember { mutableStateOf<String>(ModelDefinitions.GEMINI.name) }
     if ((mode === null || mode == PageDefaults.botTextDefault)) {
         Row(
             modifier = Modifier
@@ -52,6 +61,7 @@ fun BotTextField(mode: String? = null) {
             Box(
                 modifier = Modifier.weight(1f)
                     .align(Alignment.CenterVertically)
+                    .weight(1f)
             ) {
                 BasicTextField(
                     state = defaultTextFieldValue,
@@ -64,6 +74,7 @@ fun BotTextField(mode: String? = null) {
                         .heightIn(max = 200.dp)
                         .verticalScroll(textFieldScrollState)
                         .padding(vertical = 10.dp)
+                        .fillMaxWidth()
                 )
                 if (defaultTextFieldValue.text.toString().isEmpty()) {
                     Text(
@@ -84,6 +95,53 @@ fun BotTextField(mode: String? = null) {
                     contentDescription = "Send query",
                     tint = Color(if (defaultTextFieldValue.text.isBlank()) 0xff888888 else 0xff23D76E)
                 )
+            }
+        }
+        Spacer(Modifier.height(3.dp))
+        Box(
+            Modifier.fillMaxWidth(.9f)
+        ) {
+            ElevatedButton(
+                modifier = Modifier.align(Alignment.CenterEnd),
+                onClick = {
+                    controlBottomSheetStatus.value = true
+                },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xffF2F2F2),
+                    contentColor = Color.Black
+                )
+            ) {
+                Text(defaultModelSelection.value.lowercase())
+            }
+        }
+        if (controlBottomSheetStatus.value) {
+            ModalBottomSheet(
+                onDismissRequest = {
+                    routineScope.launch {
+                        sheetState.hide()
+                    }.invokeOnCompletion { controlBottomSheetStatus.value = false }
+                },
+                sheetState = sheetState
+            ) {
+                Column(
+                    //this is necessary for screen readers.
+                    modifier = Modifier.selectableGroup()
+                ) {
+                    listModelDefinitions.forEach { state ->
+                        ModelSelectionRadioMenu(
+                            state = state,
+                            onClick = { incomingNewType ->
+                                defaultModelSelection.value = incomingNewType
+                                routineScope.launch {
+                                    sheetState.hide()
+                                }.invokeOnCompletion {
+                                    controlBottomSheetStatus.value = false
+                                }
+                            },
+                            currentSelection = defaultModelSelection.value
+                        )
+                    }
+                }
             }
         }
     }
