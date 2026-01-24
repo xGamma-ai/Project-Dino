@@ -1,4 +1,4 @@
-package com.alwinsden.dino.botInterface.components.previews
+package com.alwinsden.dino.botInterface.previews
 
 import androidx.compose.runtime.Composable
 import com.alwinsden.dino.botInterface.components.ModelDefinitions
