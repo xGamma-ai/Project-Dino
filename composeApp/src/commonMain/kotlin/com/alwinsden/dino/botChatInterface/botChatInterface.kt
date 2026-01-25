@@ -8,6 +8,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.PowerSettingsNew
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -63,6 +64,9 @@ fun BotChatInterface() {
             modifier = Modifier.fillMaxWidth()
                 .background(color = Color(0xfffafafa))
         ) {
+            IconButton(onClick = { }) {
+                Icon(imageVector = Icons.Filled.Settings, contentDescription = null)
+            }
             Spacer(Modifier.weight(1f, true))
             Text(
                 text = "17th January 2026", textAlign = TextAlign.Center, style = defaultFontStyle(
