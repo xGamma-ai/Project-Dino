@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.alwinsden.dino.requestManager.RequestManager
@@ -21,6 +22,7 @@ import com.alwinsden.dino.utilities.UI.defaultFontStyle
 import dino.composeapp.generated.resources.Res
 import dino.composeapp.generated.resources.ic_dino_corner_sq
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 //automated Credential Manager
 @Composable
@@ -33,6 +35,7 @@ expect fun ClickableContinueWithGoogle(nonce: String): Unit
 @Composable
 expect fun ClickableContinueWithApple(nonce: String): Unit
 
+@Preview
 @Composable
 fun ContinueWithGoogle() {
     var nonce by remember { mutableStateOf(Defaults.default) }
@@ -42,31 +45,39 @@ fun ContinueWithGoogle() {
     }
     Box(
         modifier = Modifier
-            .background(Color(0xff23D76E))
+            .background(Color(0xffF3DB00))
             .statusBarsPadding()
-            .navigationBarsPadding()
             .fillMaxSize(),
     ) {
         Box(Modifier.align(Alignment.Center)) {
-            Column {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+            ) {
                 Text(
-                    "Project Dino*",
-                    color = Color.White,
+                    "Project Synapse",
                     style = defaultFontStyle(
                         incomingStyles = DefaultFontStylesDataClass(
-                            fontSize = 35.sp,
+                            fontSize = 45.sp,
                             fontWeight = FontWeight.Normal,
+                            colorInt = 0xff000000
                         )
-                    )
+                    ),
+                    textAlign = TextAlign.Center,
                 )
-                Spacer(Modifier.height(2.dp))
+            }
+            Box(
+                Modifier.align(Alignment.Center)
+            ) {
                 Column {
+                    Spacer(Modifier.height(65.dp))
                     Text(
                         "continue with",
-                        color = Color.White,
                         style = defaultFontStyle(
                             DefaultFontStylesDataClass(
-                                fontSize = 18.sp
+                                fontSize = 18.sp,
+                                colorInt = 0xff000000
                             )
                         )
                     )

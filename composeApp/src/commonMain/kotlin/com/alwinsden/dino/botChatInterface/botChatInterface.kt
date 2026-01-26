@@ -53,6 +53,16 @@ fun BotChatInterface() {
             AiUpdatedField(maxWidth = mxWidth)
             UserCreatedField(maxWidth = mxWidth)
             AiUpdatedField(maxWidth = mxWidth)
+            Text(
+                "Verify the output generated.", textAlign = TextAlign.Center,
+                style = defaultFontStyle(
+                    DefaultFontStylesDataClass(
+                        reduceFromDefault = 3,
+                        colorInt = 0xff999999
+                    )
+                ),
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+            )
             Spacer(
                 Modifier
                     .navigationBarsPadding()
