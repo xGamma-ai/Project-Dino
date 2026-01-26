@@ -23,7 +23,6 @@ class GoogleAuthenticator {
                     val idToken = gidSignInResult?.user?.idToken
                     val profile = gidSignInResult?.user?.profile
                     if (idToken != null) {
-                        println(idToken.tokenString)
                         continuation.resume(idToken.tokenString)
                     } else {
                         continuation.resume(null)
@@ -43,7 +42,6 @@ class GoogleAuthenticator {
                 val userIdToken = user?.idToken?.tokenString
                 if (userIdToken !== null) {
                     continuation.resume(userIdToken)
-                    println("auto-collected token id")
                 } else {
                     continuation.resume(null)
                 }

@@ -30,7 +30,7 @@ expect fun TriggerAutoSignIn(): Unit
 expect suspend fun manualTriggerSignIn(): Unit
 
 @Composable
-expect fun ClickableContinueWithGoogle(nonce: String): Unit
+expect fun ClickableContinueWithGoogle(nonce: String, handleReceivedGoogleTokenId: (String) -> Unit): Unit
 
 @Composable
 expect fun ClickableContinueWithApple(nonce: String): Unit
@@ -82,7 +82,9 @@ fun ContinueWithGoogle() {
                         )
                     )
                     Spacer(modifier = Modifier.height(3.dp))
-                    ClickableContinueWithGoogle(nonce)
+                    ClickableContinueWithGoogle(nonce, handleReceivedGoogleTokenId = { googleTokenId ->
+                        handleReceivedGoogleTokenId(googleTokenId)
+                    })
                     Spacer(modifier = Modifier.height(5.dp))
                     ClickableContinueWithApple(nonce)
                 }

@@ -43,7 +43,7 @@ fun handleSignIn(credsRequest: GetCredentialResponse) {
             if (credsType.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
                 try {
                     val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credsType.data)
-                    Log.d(TAG, googleIdTokenCredential.idToken)
+                    handleReceivedGoogleTokenId(googleIdTokenCredential.idToken)
                 } catch (e: GoogleIdTokenParsingException) {
                     Log.e(TAG, "Error parsing Google ID token", e)
                 }
@@ -57,7 +57,7 @@ fun handleSignIn(credsRequest: GetCredentialResponse) {
 }
 
 @Composable
-actual fun ClickableContinueWithGoogle(nonce: String) {
+actual fun ClickableContinueWithGoogle(nonce: String, handleReceivedGoogleTokenId: (String) -> Unit) {
     val context = LocalContext.current
     val credentialManager = CredentialManager.create(context)
 

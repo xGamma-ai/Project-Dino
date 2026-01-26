@@ -26,14 +26,15 @@ actual suspend fun manualTriggerSignIn() {
 }
 
 @Composable
-actual fun ClickableContinueWithGoogle(nonce: String) {
+actual fun ClickableContinueWithGoogle(nonce: String, handleReceivedGoogleTokenId: (String) -> Unit) {
     val scope = rememberCoroutineScope()
     var loaderState by remember { mutableStateOf((false)) }
     val authenticatorClass = remember { GoogleAuthenticator() }
     LaunchedEffect(Unit) {
         loaderState = true
         val readExistingTokenId = authenticatorClass.checkExisting()
-        println(readExistingTokenId)
+        if (readExistingTokenId != null)
+            handleReceivedGoogleTokenId(readExistingTokenId)
         loaderState = false
     }
     Image(
@@ -50,6 +51,9 @@ actual fun ClickableContinueWithGoogle(nonce: String) {
                     val googleIdToken = authenticatorClass.login({ loadingState ->
                         loaderState = loadingState
                     })
+                    if (googleIdToken != null) {
+                        handleReceivedGoogleTokenId(googleIdToken)
+                    }
                 }
             }
     )
